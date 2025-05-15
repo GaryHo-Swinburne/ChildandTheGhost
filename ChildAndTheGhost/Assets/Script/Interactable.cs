@@ -1,0 +1,14 @@
+using UnityEngine;
+
+public class Interactable : MonoBehaviour
+{
+    public string interactionPrompt = "Press E to interact";
+
+    // NEW: Optional grab flag
+    public bool canBeGrabbed = false;
+
+    public virtual void Interact()
+    {
+        Debug.Log("Interacted with: " + gameObject.name);
+    }
+}
