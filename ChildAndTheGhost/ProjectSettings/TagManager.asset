@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Boy
   - Mother
+  - Collectible
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Interactable
   - 
   - 
   - 
