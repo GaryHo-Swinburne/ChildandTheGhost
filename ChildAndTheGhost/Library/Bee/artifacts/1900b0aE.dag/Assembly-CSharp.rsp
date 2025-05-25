@@ -364,6 +364,14 @@
 "Assets/Script/MotherPOVCamera.cs"
 "Assets/Script/MouseLook.cs"
 "Assets/Script/PackingBox.cs"
+"Assets/Script/UseThis/BoyInteraction2.cs"
+"Assets/Script/UseThis/BoyMovement2.cs"
+"Assets/Script/UseThis/ChangeScene.cs"
+"Assets/Script/UseThis/CharacterUI.cs"
+"Assets/Script/UseThis/CollectibleItem.cs"
+"Assets/Script/UseThis/CutsceneManager.cs"
+"Assets/Script/UseThis/MotherCamera.cs"
+"Assets/Script/UseThis/SwitchCharacter.cs"
 -langversion:9.0
 /deterministic
 /optimize+
