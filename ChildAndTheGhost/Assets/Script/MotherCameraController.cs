@@ -21,7 +21,7 @@ public class MotherCameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!mother || !boy) return;
+        /*if (!mother || !boy) return;
 
         // Get mouse movement
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
@@ -39,6 +39,6 @@ public class MotherCameraController : MonoBehaviour
         Vector3 targetPosition = boy.position + direction * distance + Vector3.up * height;
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothSpeed);
 
-        transform.LookAt(boy.position + Vector3.up * 1f);
+        transform.LookAt(boy.position + Vector3.up * 1f);*/
     }
 }
