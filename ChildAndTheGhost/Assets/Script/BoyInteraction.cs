@@ -4,7 +4,6 @@ using TMPro;
 public class BoyInteraction : MonoBehaviour
 {
     [Header("References")]
-    public Transform cameraTransform;       // The follow camera (for forward direction)
     public Transform eyePoint;              // Empty GameObject positioned at eye level
     public TextMeshProUGUI promptText;      // UI element for interaction prompt
     public Transform holdPoint;             // Where objects are held
@@ -17,7 +16,7 @@ public class BoyInteraction : MonoBehaviour
     private Transform heldObject;
 
     private float holdStartTime;
-    private bool isGrabbing = false;
+    public bool isGrabbing = false;
 
     void Update()
     {
@@ -51,12 +50,9 @@ public class BoyInteraction : MonoBehaviour
     void CheckForInteractable()
     {
         Vector3 origin = eyePoint.position;
-        Vector3 direction = cameraTransform.forward;
 
-        Ray ray = new Ray(origin, direction);
+        Ray ray = new Ray(origin, transform.forward);
         RaycastHit hit;
-
-        Debug.DrawRay(origin, direction * interactRange, Color.red);
 
         if (Physics.Raycast(ray, out hit, interactRange))
         {

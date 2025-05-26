@@ -3,13 +3,10 @@ using UnityEngine;
 public class CharacterSwitcher : MonoBehaviour
 {
     [Header("Boy Settings")]
-    public GameObject boy;
-    public Camera boyCamera;
-    public MonoBehaviour boyMovementScript; // Example: ThirdPersonMovement or custom movement script
+    public Boy boy;
 
     [Header("Mother Settings")]
-    public Camera motherCamera;
-    public MotherPOVCamera motherPOVCamera; // The FPV script on mother's camera
+    public MotherPOVCamera mother;
 
     private bool isInMotherView = false;
 
@@ -18,42 +15,22 @@ public class CharacterSwitcher : MonoBehaviour
         // Start in boy view
         isInMotherView = false;
 
-        // Enable boy components
-        boyCamera.enabled = true;
-        if (boyMovementScript != null)
-            boyMovementScript.enabled = true;
-
-        // Disable mother components
-        motherCamera.enabled = false;
-        if (motherPOVCamera != null)
-            motherPOVCamera.SetControllable(false);
+        boy.CanUseInput = true;
+        mother.CanUseInput = false;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
-        {
             ToggleCharacterView();
-        }
     }
 
     void ToggleCharacterView()
     {
         isInMotherView = !isInMotherView;
 
-        // Camera toggle
-        boyCamera.enabled = !isInMotherView;
-        motherCamera.enabled = isInMotherView;
-
         // Movement toggle
-        if (boyMovementScript != null)
-            boyMovementScript.enabled = !isInMotherView;
-
-        // Mother POV control toggle
-        if (motherPOVCamera != null)
-            motherPOVCamera.SetControllable(isInMotherView);
-
-        // Debug
-        Debug.Log("Switched to: " + (isInMotherView ? "Mother POV" : "Boy Control"));
+        boy.CanUseInput = !isInMotherView;
+        mother.CanUseInput = isInMotherView;
     }
 }
