@@ -173,6 +173,13 @@ public class BoyInteraction2 : MonoBehaviour
     {
         if (heldObject == null) return;
 
+        var collectible = heldObject.GetComponent<CollectibleItem>();
+        if (collectible == null || !collectible.canGiveToMother)
+        {
+            Debug.Log("This item can't be given to mom.");
+            return;
+        }
+
         Destroy(heldObject);
         heldObject = null;
 

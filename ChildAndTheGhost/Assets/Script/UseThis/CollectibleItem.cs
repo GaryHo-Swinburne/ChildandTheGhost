@@ -4,6 +4,7 @@ public class CollectibleItem : MonoBehaviour
 {
     public string itemName = "Collectible";
     public string interactionPrompt = "Press E to collect";
+    public bool canGiveToMother = true;
 
     [HideInInspector] public bool isCollected = false;
 
