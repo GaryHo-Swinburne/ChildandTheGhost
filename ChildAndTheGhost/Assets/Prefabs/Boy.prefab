@@ -258,6 +258,7 @@ MonoBehaviour:
   jumpDownAnimationTime: 3.2
   jumpDownLandWaitTime: 1.8
   interactRange: 2
+  interactTime: 1.63
   feetPos: {fileID: 6293610425680902278}
   grabPoint: {fileID: 9138078704681864958}
   eyePoint: {fileID: 561465339654631417}

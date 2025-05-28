@@ -36,7 +36,10 @@ public class Boy : MonoBehaviour
     // Interaction settings
     [Header("Interaction Settings")]
     [SerializeField] private float interactRange;
+    [SerializeField] private float interactTime;
     private Interactable heldObject;
+    private bool startingInteract = false;
+    private float interactFinishTime = -1.0f;
 
     // References
     [Header("References")]
@@ -64,6 +67,7 @@ public class Boy : MonoBehaviour
     private bool IsInJump => jumpTime > 0.0f || isJumping || finishLandingTime > 0.0f;
     private bool IsGrounded => GetGroundDistance() < 0.1f;
     private bool FacingStraight => Mathf.Abs(transform.forward.x) < 0.01f || Mathf.Abs(transform.forward.z) < 0.01f;
+    private bool Interacting => interactFinishTime > 0.0f && Time.time < interactFinishTime;
     private bool AtLedge
     {
         get
@@ -78,9 +82,14 @@ public class Boy : MonoBehaviour
 
     private Vector3 CheckInput()
     {
+        // If the player has been blocked from using input (because of the mother/boy switching)
         if (!CanUseInput) return Vector3.zero;
 
-        bool canStartAction = IsGrounded & !IsInJump && !AtLedge;
+        // Reset interactFinishTime if it has passed
+        if (Time.time > interactFinishTime) interactFinishTime = -1.0f;
+
+        // The player can start an action (interact, grab, jump) if they are grounded, not in a jump, not at a ledge and not interacting
+        bool canStartAction = IsGrounded & !IsInJump && !AtLedge && !Interacting;
 
         // Check if the player should jump
         if (Input.GetButtonDown("Jump") && canStartAction && heldObject == null)
@@ -89,6 +98,28 @@ public class Boy : MonoBehaviour
             startingJump = true;
             return Vector3.zero;
         }
+
+        // Check if the player is pressing the interact button
+        if (Input.GetKeyDown(KeyCode.F) && canStartAction && heldObject == null)
+        {
+            // Check for interaction with an object
+            Ray ray = new Ray(eyePoint.position, transform.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, interactRange))
+            {
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                if (interactable != null && interactable.canBeInteracted)
+                {
+                    // Interact with the object
+                    interactable.Interact();
+                    startingInteract = true;
+                    interactFinishTime = Time.time + interactTime;
+                }
+            }
+        }
+
+        // If the player is interacting, no grabbing or moving is allowed
+        if (Interacting) return Vector3.zero;
 
         // Check if the player is pressing the grab button
         if (Input.GetKeyDown(KeyCode.E) && FacingStraight && canStartAction)
@@ -230,6 +261,12 @@ public class Boy : MonoBehaviour
         {
             animator.SetTrigger("jumpDown");
             startingJumpDown = false;
+        }
+
+        if (startingInteract)
+        {
+            animator.SetTrigger("interact");
+            startingInteract = false;
         }
 
         bool isWalking = IsGrounded && (velocity.x != 0.0f || velocity.z != 0.0f) && !IsInJump && !AtLedge && heldObject == null;

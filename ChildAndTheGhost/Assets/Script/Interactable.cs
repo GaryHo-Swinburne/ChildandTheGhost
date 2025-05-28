@@ -6,6 +6,7 @@ public class Interactable : MonoBehaviour
 
     // NEW: Optional grab flag
     public bool canBeGrabbed = false;
+    public bool canBeInteracted = false;
 
     public virtual void Interact()
     {
