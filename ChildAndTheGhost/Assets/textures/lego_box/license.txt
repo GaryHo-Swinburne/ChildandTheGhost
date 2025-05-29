@@ -1,0 +1,11 @@
+Model Information:
+* title:	lego box
+* source:	https://sketchfab.com/3d-models/lego-box-c2dd7c7098d342539bad1e7c77a1bd9f
+* author:	jubblys (https://sketchfab.com/jubblys)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "lego box" (https://sketchfab.com/3d-models/lego-box-c2dd7c7098d342539bad1e7c77a1bd9f) by jubblys (https://sketchfab.com/jubblys) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
