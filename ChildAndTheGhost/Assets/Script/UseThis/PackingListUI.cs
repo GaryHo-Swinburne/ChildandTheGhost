@@ -6,6 +6,10 @@ public class PackingListUI : MonoBehaviour
     public GameObject tickSoccer, tickLego, tickWater, tickLetter;
     public GameObject strikeSoccer, strikeLego, strikeWater, strikeLetter;
 
+    [Header("Sound Effect")]
+    public AudioSource openSound;
+    public AudioSource itemDeliveredSound;
+
     private bool isVisible = false;
 
     void Update()
@@ -14,12 +18,21 @@ public class PackingListUI : MonoBehaviour
         {
             isVisible = !isVisible;
             missionPanel.SetActive(isVisible);
+
+            if (isVisible && openSound != null)
+            {
+                openSound.Play();
+            }
         }
     }
 
     public void MarkItemDelivered(string itemName)
     {
         Debug.Log("Calling MarkItemDelivered with: " + itemName);
+
+        if (itemDeliveredSound != null)
+            itemDeliveredSound.Play();
+
         switch (itemName)
         {
             case "Soccer Trophy":

@@ -23,6 +23,9 @@ public class BoyInteraction2 : MonoBehaviour
     public GameObject cutsceneScreen;
     public int itemsToTriggerCutscene = 4;
 
+    [Header("Audio")]
+    public AudioSource backgroundMusic;  // ¡ö Add this line
+
     [Header("Item List")]
     public CollectibleItem[] deliverableItems;
 
@@ -199,6 +202,9 @@ public class BoyInteraction2 : MonoBehaviour
             cutsceneScreen.SetActive(true);
             switchIndicator.SetActive(false);
             cutscenePlayer.Play();
+
+            if (backgroundMusic != null)
+                backgroundMusic.mute = true;
         }
     }
 
