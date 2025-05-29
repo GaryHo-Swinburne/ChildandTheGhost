@@ -4,7 +4,7 @@ public class PackingBox : Interactable
 {
     private void Awake()
     {
-        canBeGrabbed = true; // Set this manually or via Inspector
+        canBeGrabbed = true;
     }
 
     public override void Interact()
