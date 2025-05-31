@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public string interactionPrompt = "Press E to interact";
+    public string interactionPrompt = "Press F to interact";
 
     // NEW: Optional grab flag
     public bool canBeGrabbed = false;

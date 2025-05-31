@@ -1,7 +1,33 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.Video;
+using System.Collections.Generic;
 
 public class Boy : MonoBehaviour
 {
+    public TMP_Text promptText;
+
+    [Header("Delivery")]
+    public Transform mother;
+    public float giveDistance;
+
+    [Header("Cutscene")]
+    public VideoPlayer cutscenePlayer;
+    public GameObject cutsceneScreen;
+    public int itemsToTriggerCutscene = 4;
+
+    [Header("Audio")]
+    public AudioSource backgroundMusic;  // �� Add this line
+
+    [Header("Item List")]
+    public List<CollectibleItem> deliverableItems;
+
+    [Header("UI")]
+    public GameObject switchIndicator;
+    public PackingListUI packingListUI;
+
+
+
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -40,6 +66,8 @@ public class Boy : MonoBehaviour
     private Interactable heldObject;
     private bool startingInteract = false;
     private float interactFinishTime = -1.0f;
+    private CollectibleItem currentItem;
+    private int deliveredItemCount = 0;
 
     // References
     [Header("References")]
@@ -59,6 +87,20 @@ public class Boy : MonoBehaviour
 
     public void Update()
     {
+        promptText.enabled = false;
+        if (currentItem != null && Vector3.Distance(transform.position, mother.position) <= giveDistance)
+        {
+            promptText.text = "Press F to give to Mom";
+            promptText.enabled = true;
+        }
+        Interactable interactable = CheckForCollectible();
+        if (currentItem == null && interactable != null)
+        {
+            promptText.text = interactable.interactionPrompt;
+            promptText.enabled = true;
+        }
+
+
         Vector3 move = CheckInput();
         Vector3 velocity = MovePlayer(move);
         UpdateAnimations(velocity);
@@ -102,20 +144,7 @@ public class Boy : MonoBehaviour
         // Check if the player is pressing the interact button
         if (Input.GetKeyDown(KeyCode.F) && canStartAction && heldObject == null)
         {
-            // Check for interaction with an object
-            Ray ray = new Ray(eyePoint.position, transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, interactRange))
-            {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null && interactable.canBeInteracted)
-                {
-                    // Interact with the object
-                    interactable.Interact();
-                    startingInteract = true;
-                    interactFinishTime = Time.time + interactTime;
-                }
-            }
+            TryInteraction();
         }
 
         // If the player is interacting, no grabbing or moving is allowed
@@ -135,13 +164,82 @@ public class Boy : MonoBehaviour
         }
 
         // Handle movement input
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = -Input.GetAxis("Horizontal");
+        float z = -Input.GetAxis("Vertical");
 
         return new Vector3(x, 0, z).normalized;
     }
 
-    private void TryToGrabObject()
+    private void TryInteraction()
+    {
+        // Check for giving the object to mother
+        if (currentItem != null)
+        {
+            if (Vector3.Distance(transform.position, mother.position) <= giveDistance)
+            {
+                if (deliverableItems.Contains(currentItem))
+                {
+                    Debug.Log("Item given to mom: " + currentItem.itemName);
+
+                    deliveredItemCount++;
+                    packingListUI?.MarkItemDelivered(currentItem.itemName);
+
+                    CheckCutsceneTrigger();
+                }
+                else
+                {
+                    Debug.Log("Item not deliverable.");
+                }
+
+                Destroy(currentItem.gameObject);
+                currentItem = null;
+            }
+
+            return;
+        }
+
+        // Check for interaction with an object
+        CollectibleItem item = CheckForCollectible();
+        if (item != null)
+        {
+            // Interact with the object
+            item.Interact();
+            currentItem = item;
+            startingInteract = true;
+            interactFinishTime = Time.time + interactTime;
+        }
+    }
+
+    private CollectibleItem CheckForCollectible()
+    {
+        Ray ray = new Ray(eyePoint.position, transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, interactRange))
+        {
+            CollectibleItem item = hit.collider.GetComponent<CollectibleItem>();
+            if (item != null && item.canBeInteracted)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    void CheckCutsceneTrigger()
+    {
+        if (deliveredItemCount >= itemsToTriggerCutscene && !cutscenePlayer.isPlaying)
+        {
+            cutsceneScreen.SetActive(true);
+            switchIndicator.SetActive(false);
+            cutscenePlayer.Play();
+
+            if (backgroundMusic != null)
+                backgroundMusic.mute = true;
+        }
+    }
+
+    private Interactable CheckForGrabbable()
     {
         Ray ray = new Ray(eyePoint.position, transform.forward);
         RaycastHit hit;
@@ -150,10 +248,20 @@ public class Boy : MonoBehaviour
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             if (interactable != null && interactable.canBeGrabbed)
             {
-                heldObject = interactable;
-                heldObject.transform.SetParent(grabPoint);
-                heldObject.transform.localPosition = Vector3.zero;
+                return interactable;
             }
+        }
+        return null;
+    }
+
+    private void TryToGrabObject()
+    {
+        Interactable interactable = CheckForGrabbable();
+        if (interactable != null)
+        {
+            heldObject = interactable;
+            heldObject.transform.SetParent(grabPoint);
+            heldObject.transform.localPosition = Vector3.zero;
         }
     }
 

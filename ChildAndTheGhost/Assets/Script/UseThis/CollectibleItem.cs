@@ -9,7 +9,7 @@ public class CollectibleItem : Interactable
 
     private void Awake()
     {
-        interactionPrompt = "Press F to collect";
+        //interactionPrompt = "Press F to collect";
         canBeInteracted = true;
     }
 
