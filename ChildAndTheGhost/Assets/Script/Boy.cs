@@ -18,6 +18,8 @@ public class Boy : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource backgroundMusic;  // �� Add this line
+    public AudioSource grabSound;
+    public AudioSource walkSound;
 
     [Header("Item List")]
     public List<CollectibleItem> deliverableItems;
@@ -33,6 +35,8 @@ public class Boy : MonoBehaviour
     [SerializeField] private float runSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravity;
+    [SerializeField] private float walkSoundWaitTime;
+    private float walkSoundTime = 0.0f;
 
     // Movement state
     private float verticalVelocity;
@@ -207,6 +211,7 @@ public class Boy : MonoBehaviour
             currentItem = item;
             startingInteract = true;
             interactFinishTime = Time.time + interactTime;
+            grabSound.Play();
         }
     }
 
@@ -262,6 +267,7 @@ public class Boy : MonoBehaviour
             heldObject = interactable;
             heldObject.transform.SetParent(grabPoint);
             heldObject.transform.localPosition = Vector3.zero;
+            grabSound.Play();
         }
     }
 
@@ -305,6 +311,16 @@ public class Boy : MonoBehaviour
         verticalVelocity += gravity * Time.deltaTime;
         if (IsGrounded && verticalVelocity < 0)
             verticalVelocity = -1.0f;
+
+        // Play walking sound
+        if (velocity.magnitude > 0.1f && IsGrounded)
+        {
+            if (Time.time > walkSoundTime)
+            {
+                walkSound.Play();
+                walkSoundTime = Time.time + walkSoundWaitTime;
+            }
+        }
 
         // Apply movement
         if (velocity.magnitude > 0.0f && heldObject == null) transform.forward = velocity.normalized;

@@ -6,6 +6,8 @@ public class SwitchCharacter : MonoBehaviour
     public MotherCamera motherCameraScript;
     public CharacterUI characterUI;
 
+    public AudioSource cameraSwitchSound;
+
     private bool isControllingBoy = true;
 
     void Start()
@@ -18,6 +20,7 @@ public class SwitchCharacter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             SetControl(!isControllingBoy);
+            cameraSwitchSound.Play();
         }
     }
 
