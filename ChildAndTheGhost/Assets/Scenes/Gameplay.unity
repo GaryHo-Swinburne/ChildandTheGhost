@@ -809,8 +809,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.145046, y: 221.47076, z: 4}
-  m_Center: {x: -0.33479422, y: 35.019363, z: -0.0000000041033914}
+  m_Size: {x: 2.7371716, y: 221.47076, z: 1.9167979}
+  m_Center: {x: -0.31650037, y: 35.019363, z: 0.037189268}
 --- !u!23 &417935757
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1711,6 +1711,10 @@ PrefabInstance:
     - target: {fileID: 3274245375536646569, guid: e10f5ed754548a24298ec0849a671c17, type: 3}
       propertyPath: giveDistance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274245375536646569, guid: e10f5ed754548a24298ec0849a671c17, type: 3}
+      propertyPath: interactRange
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3274245375536646569, guid: e10f5ed754548a24298ec0849a671c17, type: 3}
       propertyPath: packingListUI
@@ -4153,8 +4157,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9684489, y: 0.8803668, z: 1.5422404}
-  m_Center: {x: 0.07855061, y: -0.07020761, z: 0.69565517}
+  m_Size: {x: 0.76266253, y: 0.44062608, z: 1.5422404}
+  m_Center: {x: 0.078673676, y: -0.13287792, z: 0.69565517}
 --- !u!114 &1690788685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4489,8 +4493,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.009513495, y: 0.008992777, z: 0.012808001}
-  m_Center: {x: -0.0002642535, y: 0.00016290677, z: 0.00998371}
+  m_Size: {x: 0.0063099, y: 0.0025251901, z: 0.012807999}
+  m_Center: {x: -0.0010331661, y: 0.0012539647, z: 0.009983711}
 --- !u!114 &1915550194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7864,8 +7868,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.09753997, y: 0.27420256, z: 0.24326578}
-  m_Center: {x: -0.0015250043, y: 0.018643515, z: 0.07617045}
+  m_Size: {x: 0.09753997, y: 0.17989475, z: 0.24326578}
+  m_Center: {x: -0.0015250043, y: 0.06579701, z: 0.07617045}
 --- !u!114 &8380763084301598905
 MonoBehaviour:
   m_ObjectHideFlags: 0
