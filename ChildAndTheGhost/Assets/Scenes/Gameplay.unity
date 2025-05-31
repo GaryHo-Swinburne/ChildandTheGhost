@@ -2206,7 +2206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -237, y: 160}
+  m_AnchoredPosition: {x: 0, y: 115}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &813744985
@@ -2239,7 +2239,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.96285176, g: 1, b: 0, a: 1}
+  m_fontColor: {r: 0.9733331, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2256,8 +2256,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4129,7 +4129,7 @@ MonoBehaviour:
   offset: {x: 0, y: 1.5, z: 0.1}
   mouseSensitivity: 500
   pitchLimits: {x: -30, y: 30}
-  driftCheckInterval: 60
+  driftCheckInterval: 30
   driftSpeed: 1.5
   distractionTargets:
   - {fileID: 645188571}
